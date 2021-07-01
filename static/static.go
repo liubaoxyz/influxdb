@@ -15,7 +15,7 @@ import (
 	platform "github.com/influxdata/influxdb/v2"
 )
 
-//go:embed data/*
+//go:embed data
 var data embed.FS
 
 const (
