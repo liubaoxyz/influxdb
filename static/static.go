@@ -20,7 +20,7 @@ var data embed.FS
 
 const (
 	// defaultFile is the default UI asset file that will be served if no other
-	// static asset matches. this is particularly useful for serving content
+	// static asset matches. This is particularly useful for serving content
 	// related to a SPA with client-side routing.
 	defaultFile = "index.html"
 
@@ -37,18 +37,20 @@ const (
 )
 
 // NewAssetHandler returns an http.Handler to serve files from the provided
-// path. If an empty string is provided as the path, the files are served from
-// the embedded assets.
+// path. If no --assets-path flag is used when starting influxd, the path will
+// be empty and files are served from the embedded filesystem.
 func NewAssetHandler(assetsPath string) http.Handler {
-	var a http.Handler
+	var fileOpener fs.FS
+	var baseDir string
 
-	if assetsPath != "" {
-		a = assetHandler(os.DirFS(assetsPath), "")
+	if assetsPath == "" {
+		fileOpener = data
+		baseDir = filepath.Join(embedBaseDir, uiBaseDir)
 	} else {
-		a = assetHandler(data, filepath.Join(embedBaseDir, uiBaseDir))
+		fileOpener = os.DirFS(assetsPath)
 	}
 
-	return mwSetCacheControl(a)
+	return mwSetCacheControl(assetHandler(fileOpener, baseDir))
 }
 
 // NewSwagger returns an http.Handler to serve the swaggerFile from the
