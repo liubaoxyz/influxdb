@@ -17,6 +17,11 @@ instance_info=$(aws --region us-west-2 ec2 run-instances \
 
 # get instance info
 ec2_instance_id=$(echo $instance_info | jq -r .Instances[].InstanceId)
+
+# pull down the latest influx_tools
+AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} aws --region us-west-2 s3 cp s3://perftest-binaries-influxdb/influx_tools/latest_1.8.txt ./latest.txt
+latest_tools=$(cat latest.txt | cut -d ' ' -f1)
+AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} aws --region us-west-2 s3 cp s3://perftest-binaries-influxdb/influx_tools/$latest_tools ./influx_tools
 sleep 60
 
 ec2_ip=$(aws \
@@ -43,6 +48,7 @@ debname=$(find /tmp/workspace/artifacts/influxdb*amd64.deb)
 base_debname=$(basename $debname)
 source_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+scp influx_tools ubuntu@$ec2_ip:/home/ubuntu/influx_tools
 scp $debname ubuntu@$ec2_ip:/home/ubuntu/$base_debname
 scp ${source_dir}/run_perftest.sh ubuntu@$ec2_ip:/home/ubuntu/run_perftest.sh
 
