@@ -55,6 +55,7 @@ workflows:
             branches:
               only:
                 - "2.0"
+                - "query-perftest-2.0"
       - e2e:
           requires:
             - build
