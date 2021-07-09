@@ -3,7 +3,7 @@ WORKDIR /go/src/github.com/influxdata/influxdb
 COPY . /go/src/github.com/influxdata/influxdb
 RUN go install ./cmd/...
 
-FROM debian:stretch
+FROM alpine
 COPY --from=builder /go/bin/* /usr/bin/
 COPY --from=builder /go/src/github.com/influxdata/influxdb/etc/config.sample.toml /etc/influxdb/influxdb.conf
 
