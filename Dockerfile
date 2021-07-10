@@ -6,7 +6,12 @@ RUN go install ./cmd/...
 FROM alpine
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories  
 RUN apk update \
-    && apk add openssl
+    && apk add openssl curl \
+	&& apk add --no-cache bash \
+        bash-doc \
+        bash-completion \
+        && rm -rf /var/cache/apk/* \
+        && /bin/bash
 RUN mkdir /lib64
 ln -s /lib/ld-musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 COPY --from=builder /go/bin/* /usr/bin/
