@@ -31,7 +31,7 @@ const (
 func init() {
 	// If version is not set, make that clear.
 	if version == "" {
-		version = "unknown"
+		version = "0.0.0"
 	}
 }
 
