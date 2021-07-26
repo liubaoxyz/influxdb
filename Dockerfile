@@ -10,7 +10,7 @@ RUN apk update \
 	&& apk add --no-cache bash \
         bash-doc \
         bash-completion \
-	&& apk add -–no-cache tzdata \
+	&& apk add tzdata \
     && rm -rf /var/cache/apk/* \
     && /bin/bash
 RUN mkdir /lib64
