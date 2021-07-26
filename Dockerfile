@@ -10,9 +10,9 @@ RUN apk update \
 	&& apk add --no-cache bash \
         bash-doc \
         bash-completion \
-		tzdate \
-        && rm -rf /var/cache/apk/* \
-        && /bin/bash
+	&& apk addtzdate \
+    && rm -rf /var/cache/apk/* \
+    && /bin/bash
 RUN mkdir /lib64
 RUN ln -s /lib/ld-musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 COPY --from=builder /go/bin/* /usr/bin/
