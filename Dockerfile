@@ -1,4 +1,4 @@
-FROM golang:1.13.8 as builder
+FROM golang:1.16.15 as builder
 WORKDIR /go/src/github.com/influxdata/influxdb
 COPY . /go/src/github.com/influxdata/influxdb
 RUN go install ./cmd/...
