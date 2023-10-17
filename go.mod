@@ -45,7 +45,7 @@ require (
 	github.com/willf/bitset v1.1.3 // indirect
 	github.com/xlab/treeprint v0.0.0-20180616005107-d6fb6747feb6
 	go.uber.org/zap v1.9.1
-	golang.org/x/crypto 0.0.0-20220314234659-1baeb1ce4c0b
+	golang.org/x/crypto v0.0.0-20220314234659-1baeb1ce4c0b
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 	golang.org/x/sys v0.0.0-20220412211240-33da011f77ad
 	golang.org/x/text v0.3.8
