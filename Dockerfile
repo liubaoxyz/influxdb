@@ -13,6 +13,7 @@ RUN apk update \
 	&& apk add tzdata \
     && rm -rf /var/cache/apk/* \
     && /bin/bash
+RUN apk upgrade
 RUN mkdir /lib64
 RUN ln -s /lib/ld-musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 COPY --from=builder /go/bin/* /usr/bin/
