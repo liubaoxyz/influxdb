@@ -4,7 +4,7 @@ COPY . /go/src/github.com/influxdata/influxdb
 RUN go mod tidy
 RUN go install ./cmd/...
 
-FROM alpine
+FROM alpine:3.14.10
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories  
 RUN apk update \
     && apk add openssl curl \
@@ -17,8 +17,6 @@ RUN apk update \
 RUN apk upgrade
 RUN mkdir /lib64
 RUN ln -s /lib/ld-musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
-RUN ln -s /lib/libcrypto.so.3 /lib/libcrypto.so.1.1
-RUN ln -s /lib/libssl.so.3 /lib/libssl.so.1.1
 COPY --from=builder /go/bin/* /usr/bin/
 COPY --from=builder /go/src/github.com/influxdata/influxdb/etc/config.sample.toml /etc/influxdb/influxdb.conf
 
